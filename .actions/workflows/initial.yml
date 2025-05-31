@@ -1,0 +1,17 @@
+name: CI_configuration_workflow
+
+on: 
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  do-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Lint-test
+        uses:
+      - name: Unit-test
+        uses:
+      - name: Build-Docker-image
+        uses:
