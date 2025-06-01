@@ -12,7 +12,7 @@ def main_page():
             b = float(request.form["secondNumber"])
             result = a + b
         except ValueError:
-            result = "Invalid input"            
+            result = "Invalid input"
     return render_template("index.html", result=result)
 
 
