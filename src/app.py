@@ -16,5 +16,9 @@ def main_page():
     return render_template("index.html", result=result)
 
 
+def add(i_FirstNum, i_SecondNum):
+    return i_FirstNum + i_SecondNum
+
+
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5051)
