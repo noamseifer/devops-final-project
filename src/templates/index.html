@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Addition Calculator</title>
+</head>
+
+<body>
+    <h1>Add Two Numbers</h1>
+    <form method="post">
+        <input type="text" name="firstNumber" placeholder="Enter first number" required>
+        +
+        <input type="text" name="secondNumber" placeholder="Enter second number" required>
+        <button type="submit">Calculate</button>
+    </form>
+
+    {% if result is not none %}
+    <h2>Result: {{ result }}</h2>
+    {% endif %}
+</body>
+
+</html>
