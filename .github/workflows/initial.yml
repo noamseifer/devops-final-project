@@ -39,8 +39,11 @@ jobs:
         uses: actions/setup-python@v5
 
       - name: Install test dependencies
-        run: pip install pytest
-
+        run: pip install -r requirements.txt
+      
+      - name: Install app dependencies for unit tests
+        run: pip ins
+      
       - name: run pytest
         run: PYTHONPATH=src pytest
       
