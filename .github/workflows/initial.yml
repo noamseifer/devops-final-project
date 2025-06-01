@@ -59,7 +59,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: . # Build's context is the set of files located in the specified PATH, context makes a broad set of files available, yet the Dockerfile explicitly dictates which of those files (and where they go) become part of the final image.
-          file: <pathtodockerfile>/Dockerfile # need to make an actual dockerfile
+          file: /Dockerfile # need to make an actual dockerfile
           push: false # I dont want any pushing to Dockerhub on pull
           tags: omer/apptest:latest
 
