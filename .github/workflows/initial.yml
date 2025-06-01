@@ -38,11 +38,11 @@ jobs:
       - name: Set Up Python
         uses: actions/setup-python@v5
 
-      - name: Install test dependencies
+      - name: Install test app dependencies
         run: pip install -r requirements.txt
       
-      - name: Install app dependencies for unit tests
-        run: pip ins
+      - name: Install test dependency for unit tests
+        run: pip install pytest
       
       - name: run pytest
         run: PYTHONPATH=src pytest
