@@ -45,13 +45,22 @@ jobs:
         run: PYTHONPATH=src pytest
       
 
-  # build-job:
-  #   runs-on: ubuntu-latest
-  #   needs: [lint-job, unit-job] # We require successfull lint and unit test to enable building test.
-  #   steps:
-  #     - name: checkout
-  #       uses: actions/checkout@v4
+  build-job:
+    runs-on: ubuntu-latest
+    needs: [lint-job, unit-job] # We require successfull lint and unit test to enable building test.
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      
+      - name: Set up Docker Buildx # Not required but heavily recomended by official Docker team Build & Push action documentation
+        uses: docker/setup-buildx-action@v3
 
-  #     - name: Build-Docker-image
+      - name: Build-Docker-image
+        uses: docker/build-push-action@v6
+        with:
+          context: . # Build's context is the set of files located in the specified PATH, context makes a broad set of files available, yet the Dockerfile explicitly dictates which of those files (and where they go) become part of the final image.
+          file: ./Dockerfile # need to make an actual dockerfile
+          push: false # I dont want any pushing to Dockerhub on pull
+          tags: omer/apptest:latest
 
     
