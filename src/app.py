@@ -46,8 +46,8 @@ def emails_page():
 
     return render_template(
         "emails.html",
-        emails = emails,
-        cardinality = cardinality
+        emails=emails,
+        cardinality=cardinality
     )
 
 
