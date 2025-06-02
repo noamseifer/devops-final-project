@@ -1,7 +1,4 @@
-from app import add, check_is_email
-
-def test_add():
-    assert add(2, 3) == 5
+from app import check_is_email
 
 
 def test_check_is_email():

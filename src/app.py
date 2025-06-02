@@ -5,8 +5,8 @@ import re
 app = Flask(__name__)
 
 # Will need to add redis to our multi-container
-# redis_client = 
-# redis.Redis(host='redis', port=6379, db=0, decode_responses=True) 
+# redis_client =
+# redis.Redis(host='redis', port=6379, db=0, decode_responses=True)
 redis_client = redis.Redis(
     host='localhost',
     port=6379,
@@ -43,11 +43,11 @@ def emails_page():
     emails = redis_client.smembers('emails-set')
     emails = sorted(emails)
     cardinality = redis_client.scard("emails-set")
-    
+
     return render_template(
         "emails.html",
-        emails= emails,
-        cardinality=cardinality
+        emails = emails,
+        cardinality = cardinality
     )
 
 
