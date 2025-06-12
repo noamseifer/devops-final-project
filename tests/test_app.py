@@ -1,16 +1,16 @@
 from app import app, check_is_email, is_email_registered, redis_client
 
 
-def test_check_is_email():
-    assert check_is_email("abc@gmail.com") == True
-    assert check_is_email("user.name+tag+sorting@example.com") == True
-    assert check_is_email("plainaddress") == False
-    assert check_is_email("missin_at_sign.com") == False
-    assert check_is_email("missingdomain@.com") == False
-    assert check_is_email("") == False
+def test_check_is_email() -> None:
+    assert check_is_email("abc@gmail.com") is True
+    assert check_is_email("user.name+tag+sorting@example.com") is True
+    assert check_is_email("plainaddress") is False
+    assert check_is_email("missin_at_sign.com") is False
+    assert check_is_email("missingdomain@.com") is False
+    assert check_is_email("") is False
 
 
-def test_is_email_registered():
+def test_is_email_registered() -> None:
     redis_client.delete("emails-set")
     email = "test@example.com"
     assert is_email_registered(email)  # True because not in redis

@@ -5,9 +5,10 @@ from prometheus_client import Counter
 
 app = Flask(__name__)
 
+
 # # Prometheus metric
 emails_added_total = Counter(
-    'emails_added_total', 
+    'emails_added_total',
     'Total number of emails added'
 )
 
@@ -64,7 +65,7 @@ def check_is_email(i_InputString) -> bool:
     return re.fullmatch(email_validate_pattern, i_InputString) is not None
 
 
-# returns true if email is already registered 
+# returns true if email is already registered
 def is_email_registered(i_InputString) -> bool:
     return redis_client.sismember("emails-set", i_InputString)
 
