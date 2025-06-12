@@ -1,8 +1,17 @@
 from flask import Flask, request, render_template
 import redis
 import re
+from prometheus_client import Counter
 
 app = Flask(__name__)
+
+
+# # Prometheus metric
+emails_added_total = Counter(
+    'emails_added_total',
+    'Total number of emails added'
+)
+
 
 # Will need to add redis to our multi-container
 # redis_client =
@@ -28,11 +37,12 @@ def main_page():
     if request.method == "POST":
         email = str(request.form["userEmail"])
         if check_is_email(email):
-            if redis_client.sismember("emails-set", email):
+            if is_email_registered(email):
                 result = "Email already registered"
             else:
                 result = "Valid Email"
                 redis_client.sadd("emails-set", email)
+                emails_added_total.inc()
         else:
             result = "Invalid Email"
     return render_template("index.html", result=result)
@@ -53,6 +63,11 @@ def emails_page():
 
 def check_is_email(i_InputString) -> bool:
     return re.fullmatch(email_validate_pattern, i_InputString) is not None
+
+
+# returns true if email is already registered
+def is_email_registered(i_InputString) -> bool:
+    return redis_client.sismember("emails-set", i_InputString)
 
 
 if __name__ == "__main__":

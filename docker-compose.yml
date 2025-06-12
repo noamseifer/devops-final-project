@@ -9,6 +9,7 @@ volumes:
   grafana_data:
   redis_data: # Added volume for Redis persistence
 
+
 services:
   node-exporter:
     image: prom/node-exporter:latest
@@ -80,7 +81,7 @@ services:
     build: .
     container_name: login-app
     ports:
-      - "5000:5000"
+      - "5051:5000"
     volumes:
       - ./src:/devops-final-project/src
     environment:
