@@ -16,7 +16,8 @@ services:
     pid: host
     restart: unless-stopped
     volumes:
-      - '/:/host:ro,rslave'
+      - '/:/host:ro'
+      # deleted rslave 
     command:
       - '--path.rootfs=/host'
       - '--web.listen-address=:9100'
