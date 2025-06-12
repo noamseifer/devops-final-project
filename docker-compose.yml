@@ -58,3 +58,18 @@ services:
     restart: unless-stopped
     depends_on:
       - prometheus
+
+  app:
+    build: .
+    container_name: login-app
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./src:/devops-final-project/src
+    environment:
+      - FLASK_APP=src/app.py
+      - FLASK_RUN_HOST=0.0.0.0
+    networks:
+      - monitoring
+    depends_on:
+      - prometheus
