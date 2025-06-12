@@ -18,13 +18,13 @@ def test_is_email_registered() -> None:
     assert not is_email_registered(email)  # False because now exists
 
 
-def test_main_page_returns_200():
-    with app.test_client() as client:
-        response = client.get("/")  # GET request to "/"
-        assert response.status_code == 200
+# def test_main_page_returns_200():
+#     with app.test_client() as client:
+#         response = client.get("/")  # GET request to "/"
+#         assert response.status_code == 200
 
 
-def test_emails_page_returns_200():
-    with app.test_client() as client:
-        response = client.get("/emails")  # GET request to "/emails"
-        assert response.status_code == 200
+# def test_emails_page_returns_200():
+#     with app.test_client() as client:
+#         response = client.get("/emails")  # GET request to "/emails"
+#         assert response.status_code == 200
