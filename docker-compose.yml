@@ -7,6 +7,7 @@ networks:
 volumes:
   prometheus_data:
   grafana_data:
+  redis_data: # Added volume for Redis persistence
 
 services:
   node-exporter:
@@ -17,7 +18,6 @@ services:
     restart: unless-stopped
     volumes:
       - '/:/host:ro'
-      # deleted rslave 
     command:
       - '--path.rootfs=/host'
       - '--web.listen-address=:9100'
@@ -48,7 +48,6 @@ services:
     volumes:
       - grafana_data:/var/lib/grafana
       - ./grafana/provisioning/:/etc/grafana/provisioning/
-      # New volume mount for dashboards
       - ./grafana/dashboards:/var/lib/grafana/dashboards
     environment:
       - GF_SECURITY_ADMIN_USER=admin
@@ -58,6 +57,24 @@ services:
     restart: unless-stopped
     depends_on:
       - prometheus
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    hostname: redis
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - monitoring
+    restart: unless-stopped 
 
   app:
     build: .
@@ -69,7 +86,10 @@ services:
     environment:
       - FLASK_APP=src/app.py
       - FLASK_RUN_HOST=0.0.0.0
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
     networks:
       - monitoring
     depends_on:
       - prometheus
+      - redis
