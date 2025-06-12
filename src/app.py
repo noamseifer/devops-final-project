@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 # # Prometheus metric
 emails_added_total = Counter(
-    'emails_added_total', 
+    'emails_added_total',
     'Total number of emails added'
 )
 
