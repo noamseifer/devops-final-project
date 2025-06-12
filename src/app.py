@@ -6,7 +6,10 @@ from prometheus_client import Counter
 app = Flask(__name__)
 
 # # Prometheus metric
-emails_added_total = Counter('emails_added_total', 'Total number of emails added')
+emails_added_total = Counter(
+    'emails_added_total', 
+    'Total number of emails added'
+)
 
 
 # Will need to add redis to our multi-container
