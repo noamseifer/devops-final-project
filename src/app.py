@@ -61,9 +61,10 @@ def emails_page():
         cardinality=cardinality
     )
 
+
 @app.route("/metrics")
 def metrics():
-    return generate_latest(), 200, { 'Content-Type':CONTENT_TYPE_LATEST }
+    return generate_latest(), 200, {'Content-Type': CONTENT_TYPE_LATEST}
 
 
 def check_is_email(i_InputString) -> bool:
