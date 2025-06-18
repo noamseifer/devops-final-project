@@ -7,14 +7,16 @@ networks:
 volumes:
   prometheus_data:
   grafana_data:
-  redis_data: # Added volume for Redis persistence
+  redis_data:
+    # Added volume for Redis persistence
 
 
 services:
   node-exporter:
     image: prom/node-exporter:latest
     container_name: node-exporter
-    network_mode: host
+    ports:
+      - '9100:9100'
     pid: host
     restart: unless-stopped
     volumes:
@@ -69,17 +71,17 @@ services:
     volumes:
       - redis_data:/data
     healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
+      test: [ "CMD", "redis-cli", "ping" ]
       interval: 5s
       timeout: 5s
       retries: 5
     networks:
       - monitoring
-    restart: unless-stopped 
+    restart: unless-stopped
 
   app:
     build: .
-    container_name: login-app
+    container_name: app
     ports:
       - "5051:5000"
     volumes:

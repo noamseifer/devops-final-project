@@ -1,7 +1,8 @@
 from flask import Flask, request, render_template
 import redis
 import re
-from prometheus_client import Counter
+from prometheus_client import Counter, generate_latest, CONTENT_TYPE_LATEST
+
 
 app = Flask(__name__)
 
@@ -59,6 +60,11 @@ def emails_page():
         emails=emails,
         cardinality=cardinality
     )
+
+
+@app.route("/metrics")
+def metrics():
+    return generate_latest(), 200, {'Content-Type': CONTENT_TYPE_LATEST}
 
 
 def check_is_email(i_InputString) -> bool:
