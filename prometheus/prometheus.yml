@@ -11,8 +11,6 @@ scrape_configs:
     static_configs:
       - targets: ['host.docker.internal:9100']
   
-  # changed target from node exporter to host docker internal
-  # Example for a backend service (replace with your actual service details)
-  # - job_name: 'my-backend'
-  #   static_configs:
-  #     - targets: ['my-backend:8080']
+  - job_name: 'app'
+    static_configs:
+      - targets: ['app:5000']
