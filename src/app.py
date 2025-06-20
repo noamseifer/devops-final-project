@@ -6,7 +6,7 @@ from prometheus_client import (
     Histogram,
     generate_latest,
     CONTENT_TYPE_LATEST
-) 
+)
 
 
 app = Flask(__name__)
