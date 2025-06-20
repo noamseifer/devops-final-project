@@ -1,7 +1,12 @@
 from flask import Flask, request, render_template
 import redis
 import re
-from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
+from prometheus_client import (
+    Counter,
+    Histogram,
+    generate_latest,
+    CONTENT_TYPE_LATEST
+) 
 
 
 app = Flask(__name__)
@@ -12,6 +17,7 @@ emails_added_total = Counter(
     'emails_added_total',
     'Total number of emails added'
 )
+
 
 request_latency = Histogram(
     'email_submission_latency_seconds',
