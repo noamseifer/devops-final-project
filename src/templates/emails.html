@@ -4,19 +4,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Emails</title>
 </head>
 
-<body>
+<body
+    style="font-family: Arial, sans-serif; background-color: #f2f2f2; display: flex; justify-content: center; align-items: center; min-height: 100vh;">
 
-    <h1>Class Emails:</h1>
+    <div
+        style="background-color: white; padding: 40px; border-radius: 12px; box-shadow: 0 0 10px rgba(0,0,0,0.1); width: 100%; max-width: 500px; text-align: center;">
 
-    <p>{{ cardinality }} emails in list</p>
-    <ul>
-        {% for email in emails %}
-        <li>{{ email }}</li>
-        {% endfor %}
-    </ul>
+        <h1 style="margin-bottom: 24px; color: #333;">Mailing List</h1>
+
+        <p style="font-size: 18px; color: #555;">There are: {{ cardinality }} emails in the list</p>
+
+        <ul style="list-style: none; padding: 0; margin-top: 20px;">
+            {% for email in emails %}
+            <li style="background-color: #f9f9f9; margin-bottom: 10px; padding: 10px; border-radius: 8px; color: #333;">
+                {{ email }}
+            </li>
+            {% endfor %}
+        </ul>
+
+        <a href="/"
+            style="background-color: #007bff; color: white; padding: 12px 20px; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; text-decoration: none; display: inline-block; margin-left: 10px;">
+            Go Back To Email Submission Page
+        </a>
+    </div>
 
 </body>
 
