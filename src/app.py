@@ -40,7 +40,7 @@ redis_client = redis.Redis(
 # - Requires one or more non-whitespace characters before the @
 # - Requires one or more non-whitespace characters after the @ and before the .
 # - Requires one or more non-whitespace characters after the .
-email_validate_pattern = r"^\S+@\S+\.\S+$"  
+email_validate_pattern = r"^\S+@\S+\.\S+$"
 
 
 @app.route("/", methods=["GET", "POST"])
