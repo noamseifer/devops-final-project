@@ -1,16 +1,21 @@
 from flask import Flask, request, render_template
 import redis
 import re
-from prometheus_client import Counter, generate_latest, CONTENT_TYPE_LATEST
+from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
 
 
 app = Flask(__name__)
 
 
-# # Prometheus metric
+# # Prometheus metrics
 emails_added_total = Counter(
     'emails_added_total',
     'Total number of emails added'
+)
+
+request_latency = Histogram(
+    'email_submission_latency_seconds',
+    'Latency of email submissions'
 )
 
 
@@ -36,16 +41,17 @@ email_validate_pattern = r"^\S+@\S+\.\S+$"
 def main_page():
     result = None
     if request.method == "POST":
-        email = str(request.form["userEmail"])
-        if check_is_email(email):
-            if is_email_registered(email):
-                result = "Email already registered"
+        with request_latency.time():
+            email = str(request.form["userEmail"])
+            if check_is_email(email):
+                if is_email_registered(email):
+                    result = "Email already registered"
+                else:
+                    result = "Valid Email"
+                    redis_client.sadd("emails-set", email)
+                    emails_added_total.inc()
             else:
-                result = "Valid Email"
-                redis_client.sadd("emails-set", email)
-                emails_added_total.inc()
-        else:
-            result = "Invalid Email"
+                result = "Invalid Email"
     return render_template("index.html", result=result)
 
 
