@@ -1,6 +1,11 @@
-from src.app import app, check_is_email, is_email_registered
-import src.app as app_module
+import sys
+import os
 
+# Add the src folder to sys.path so Python can find app.py inside src
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
+
+import app as app_module
+from app import app, check_is_email, is_email_registered
 
 from unittest.mock import MagicMock
 
