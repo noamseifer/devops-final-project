@@ -24,11 +24,10 @@ def test_is_email_registered(monkeypatch):
     mock_redis = MagicMock()
     monkeypatch.setattr(app_module, "redis_client", mock_redis)
     email = "test@example.com"
-    # First call: not in Redis
+
     mock_redis.sismember.return_value = False
     assert is_email_registered(email) is False
 
-    # Now simulate email is in Redis
     mock_redis.sismember.return_value = True
     assert is_email_registered(email) is True
 
@@ -48,4 +47,10 @@ def test_emails_page_returns_200(monkeypatch):
 
     with app.test_client() as client:
         response = client.get("/emails")
+        assert response.status_code == 200
+
+
+def test_metrics_endpoint_returns_200():
+    with app.test_client() as client:
+        response = client.get("/metrics")
         assert response.status_code == 200
