@@ -26,11 +26,11 @@ def test_is_email_registered(monkeypatch):
     email = "test@example.com"
     # First call: not in Redis
     mock_redis.sismember.return_value = False
-    assert is_email_registered(email) is True
+    assert is_email_registered(email) is False
 
     # Now simulate email is in Redis
     mock_redis.sismember.return_value = True
-    assert is_email_registered(email) is False
+    assert is_email_registered(email) is True
 
 
 
