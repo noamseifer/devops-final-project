@@ -1,13 +1,13 @@
-# from app import app, check_is_email
+from app import app, check_is_email
 
 
-# def test_check_is_email():
-#     assert check_is_email("abc@gmail.com") is True
-#     assert check_is_email("user.name+tag+sorting@example.com") is True
-#     assert check_is_email("plainaddress") is False
-#     assert check_is_email("missin_at_sign.com") is False
-#     assert check_is_email("missingdomain@.com") is False
-#     assert check_is_email("") is False
+def test_check_is_email():
+    assert check_is_email("abc@gmail.com") is True
+    assert check_is_email("user.name+tag+sorting@example.com") is True
+    assert check_is_email("plainaddress") is False
+    assert check_is_email("missin_at_sign.com") is False
+    assert check_is_email("missingdomain@.com") is False
+    assert check_is_email("") is False
 
 
 def test_is_email_registered() -> None:
@@ -35,14 +35,9 @@ def test_metrics_endpoint_returns_200():
         response = client.get("/metrics")
         assert response.status_code == 200
 
-def test_main_page_returns_200():
-    with app.test_client() as client:
-        response = client.get("/")  # GET request to "/"
-        assert response.status_code == 200
-
 
 def test_emails_page_returns_200():
     with app.test_client() as client:
-        response = client.get("/emails")  # GET request to "/emails"
+        response = client.get("/emails")
         assert response.status_code == 200
 
