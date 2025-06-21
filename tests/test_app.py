@@ -1,5 +1,5 @@
 from unittest.mock import MagicMock
-from app import app, check_is_email
+from app import app, check_is_email, redis_client
 
 
 def test_check_is_email():
