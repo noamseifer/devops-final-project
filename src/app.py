@@ -31,6 +31,7 @@ redis_client = redis.from_url(redis_url, decode_responses=True)
 # Email validation regex
 email_validate_pattern = r"^\S+@\S+\.\S+$"
 
+
 @app.route("/", methods=["GET", "POST"])
 def main_page():
     result = None
@@ -48,22 +49,31 @@ def main_page():
                 result = "Invalid Email"
     return render_template("index.html", result=result)
 
+
 @app.route("/emails")
 def emails_page():
     emails = redis_client.smembers('emails-set')
     emails = sorted(emails)
     cardinality = redis_client.scard("emails-set")
-    return render_template("emails.html", emails=emails, cardinality=cardinality)
+    return render_template(
+        "emails.html",
+        emails=emails,
+        cardinality=cardinality
+        )
+
 
 @app.route("/metrics")
 def metrics():
     return generate_latest(), 200, {'Content-Type': CONTENT_TYPE_LATEST}
 
+
 def check_is_email(i_InputString) -> bool:
     return re.fullmatch(email_validate_pattern, i_InputString) is not None
 
+
 def is_email_registered(i_InputString) -> bool:
     return redis_client.sismember("emails-set", i_InputString)
+
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5051)
