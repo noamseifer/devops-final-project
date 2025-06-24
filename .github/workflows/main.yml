@@ -1,10 +1,11 @@
-name: Publish Docker Image
+name: Publish Docker Image and Deploy to Render
 
 on:
   workflow_dispatch:
+
 env:
   IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
-  
+
 jobs:
   docker:
     runs-on: ubuntu-latest
@@ -25,3 +26,7 @@ jobs:
           context: .
           push: true
           tags: ${{ env.IMAGE_NAME }}:latest
+
+      - name: Trigger Render deploy hook
+        if: success()  # only run if image build & push succeeds
+        run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
