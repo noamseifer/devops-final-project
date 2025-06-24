@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template
 import redis
 import re
+import os
 
 from prometheus_client import (
     Counter,
@@ -9,40 +10,26 @@ from prometheus_client import (
     CONTENT_TYPE_LATEST
 )
 
-
 app = Flask(__name__)
 
-
-# # Prometheus metrics
+# Prometheus metrics
 emails_added_total = Counter(
     'emails_added_total',
     'Total number of emails added'
 )
-
 
 request_latency = Histogram(
     'email_submission_latency_seconds',
     'Latency of email submissions'
 )
 
+# Use REDIS_URL env var (Render provides this)
+# Fall back to localhost Redis if not set
+redis_url = os.environ.get("REDIS_URL", "redis://localhost:6379")
+redis_client = redis.from_url(redis_url, decode_responses=True)
 
-# Will need to add redis to our multi-container
-# redis_client =
-# redis.Redis(host='redis', port=6379, db=0, decode_responses=True)
-redis_client = redis.Redis(
-    host='redis_host',
-    port=6379,
-    db=0,
-    decode_responses=True
-)
-
-
-# Basic email validation:
-# - Requires one or more non-whitespace characters before the @
-# - Requires one or more non-whitespace characters after the @ and before the .
-# - Requires one or more non-whitespace characters after the .
+# Email validation regex
 email_validate_pattern = r"^\S+@\S+\.\S+$"
-
 
 @app.route("/", methods=["GET", "POST"])
 def main_page():
@@ -61,33 +48,22 @@ def main_page():
                 result = "Invalid Email"
     return render_template("index.html", result=result)
 
-
 @app.route("/emails")
 def emails_page():
     emails = redis_client.smembers('emails-set')
     emails = sorted(emails)
     cardinality = redis_client.scard("emails-set")
-
-    return render_template(
-        "emails.html",
-        emails=emails,
-        cardinality=cardinality
-    )
-
+    return render_template("emails.html", emails=emails, cardinality=cardinality)
 
 @app.route("/metrics")
 def metrics():
     return generate_latest(), 200, {'Content-Type': CONTENT_TYPE_LATEST}
 
-
 def check_is_email(i_InputString) -> bool:
     return re.fullmatch(email_validate_pattern, i_InputString) is not None
 
-
-# returns true if email is already registered
 def is_email_registered(i_InputString) -> bool:
     return redis_client.sismember("emails-set", i_InputString)
-
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5051)

@@ -1,16 +1,20 @@
 global:
   scrape_interval: 15s
-  # evaluation_interval: 15s $NS$ - what does evaluation_interval mean?
+  # evaluation_interval: 15s
+  # evaluation_interval defines how often Prometheus evaluates rules (like alerting rules).
+  # If you’re not using rules, you can ignore or omit this.
 
 scrape_configs:
   - job_name: 'prometheus'
     static_configs:
-      - targets: ['prometheus:9090'] # $NS$ : modified from localhost -> prometheus 
+      - targets: ['localhost:9090']  # This is Prometheus itself
 
   - job_name: 'node-exporter'
     static_configs:
-      - targets: ['host.docker.internal:9100']
-  
+      - targets: ['host.docker.internal:9100']  # Host's Node Exporter exposed on host
+
   - job_name: 'app'
+    metrics_path: /metrics
+    scheme: https  # use https because Render uses TLS
     static_configs:
-      - targets: ['app:5000']
+      - targets: ['https://devops-final-project-vd1u.onrender.com']  # 👈 update this
