@@ -6,9 +6,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..',
 
 import app as app_module
 from app import app, check_is_email, is_email_registered
-
 from unittest.mock import MagicMock
-
 
 
 def test_check_is_email():
@@ -24,7 +22,7 @@ def test_is_email_registered(monkeypatch):
     mock_redis = MagicMock()
     monkeypatch.setattr(app_module, "redis_client", mock_redis)
     email = "test@example.com"
-
+    
     mock_redis.sismember.return_value = False
     assert is_email_registered(email) is False
 
