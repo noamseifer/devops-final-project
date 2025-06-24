@@ -67,6 +67,11 @@ def metrics():
     return generate_latest(), 200, {'Content-Type': CONTENT_TYPE_LATEST}
 
 
+# @app.route("/cicd-test")
+# def cicd_test():
+#     return "CI/CD Pipeline Working!", 200
+
+
 def check_is_email(i_InputString) -> bool:
     return re.fullmatch(email_validate_pattern, i_InputString) is not None
 
