@@ -150,9 +150,11 @@ Main branch rules:
 
 CI:
 The CI workflow "CI_Workflow.yml" that runs on pull requst to main activates linting and unit tests, and only after those pass it uses the official docker build and push action to only build a docker image of the app (in order to test for issues in docker image generation).
+[![CI PR Configuration Workflow](https://github.com/noamseifer/devops-final-project/actions/workflows/CI_Workflow.yml/badge.svg)](https://github.com/noamseifer/devops-final-project/actions/workflows/CI_Workflow.yml)
 
 CD:
 The CD workflow "DeploymentWorkflow.yml" runs manually on workflow_dispatch (it could be configured differently, but we chose this manner in order to guarantee that only a human approved version of the code gets deployed). The workflow uses the official build and push action to build and push the app container image to Dockerhub, and if it successfully  deployed the docker image to Dockerhub it uses the Render service deploy hook to force the service to restart which forces render to pull the up-to-date version of the app image from Dockerhub.
+[![Publish Docker Image and Deploy to Render](https://github.com/noamseifer/devops-final-project/actions/workflows/DeploymentWorkflow.yml/badge.svg)](https://github.com/noamseifer/devops-final-project/actions/workflows/DeploymentWorkflow.yml)
 
 Graphana and Prometheus Screenshots:
 
