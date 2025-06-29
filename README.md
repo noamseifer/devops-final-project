@@ -11,10 +11,10 @@ Before you begin, make sure you understand the two ways to run the project:
 
 **You will need:**
 
-- A Linux machine or WSL (for Windows users)
-- [Docker](https://www.docker.com/products/docker-desktop) — for containerization  
-- [Docker Compose](https://docs.docker.com/compose/) — for running multiple containers  
-- A modern browser (to access the app and monitoring dashboards)
+- ✅ A Linux machine or WSL (for Windows users)
+- ✅ [Docker](https://www.docker.com/products/docker-desktop) — for containerization  
+- ✅ [Docker Compose](https://docs.docker.com/compose/) — for running multiple containers  
+- ✅ A modern browser (to access the app and monitoring dashboards)
 
 
 
@@ -82,7 +82,7 @@ docker-compose up --build
    docker-compose up
    ```
 
-> ✅ Since you're only pulling Docker images from Docker Hub, there's no need to build them manually.
+> Since you're only pulling Docker images from Docker Hub, there's no need to build them manually.
 
 
 ### 3️⃣ Start the Application
