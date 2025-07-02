@@ -14,4 +14,4 @@ scrape_configs:
     metrics_path: /metrics
     scheme: https  # use https because Render uses TLS
     static_configs:
-      - targets: ['devops-final-project-vd1u.onrender.com']
+      - targets: ['https://devops-final-project-0v0o.onrender.com']
