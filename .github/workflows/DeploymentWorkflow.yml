@@ -1,6 +1,8 @@
 name: Publish Docker Image and Deploy to Render
 
 on:
+  push:
+    branches: [ main ]
   workflow_dispatch:
 
 env:
